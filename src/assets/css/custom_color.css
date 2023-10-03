@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+:root {
+    --bg-color__100: #000000;
+    --bg-color__200: #111111;
+    --bg-color__300: #222222;
+    --bg-color__400:#333333;
+    --bg-color__500:#444444;
+    --bg-color__900:#999999;
+
+    --text-color__100: #ffffff;
+    --text-color__200: #f1f1f1;
+    --text-color__300: #e0dede;
+    --text-color__400: #d6d5d5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* scrollbar width & height */
+::-webkit-scrollbar {
+    width: 3px;
+    height: 5px; 
+    border-radius: 1rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--bg-color__100);
+    border-radius: 3px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    height: 5px;
+    background: var(--bg-color__900);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-corner {
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover{
+    background: var(--bg-color__500);
+}
+
+/* Background color */
+.custom_bg_color__100 {
+    background-color: var(--bg-color__100);
+}
+
+.custom_bg_color__200 {
+    background-color: var(--bg-color__200);
+}
+
+.custom_bg_color__300 {
+    background-color: var(--bg-color__300);
+}
+.custom_bg_color__400 {
+    background-color: var(--bg-color__400);
+}
+.custom_bg_color__500 {
+    background-color: var(--bg-color__500);
+}
+.custom_bg_color__900 {
+    background-color: var(--bg-color__900);
+}
+
+/* Background color 2*/
+.custom_bg2_color__100 {
+    background-color: var(--text-color__100);
+}
+
+.custom_bg2_color__200 {
+    background-color: var(--text-color__200);
+}
+
+.custom_bg2_color__300 {
+    background-color: var(--text-color__300);
+}
+.custom_bg2_color__400 {
+    background-color: var(--text-color__400);
+}
+
+/* Text color */
+.custom_text_color__100 {
+    color: var(--text-color__100);
+}
+
+.custom_text_color__200 {
+    color: var(--text-color__200);
+}
+
+.custom_text_color__300 {
+    color: var(--text-color__300);
+}
+.custom_text_color__400 {
+    color: var(--text-color__400);
+}
+
+
+/* Text color 2 */
+.custom_text2_color__100 {
+    color: var(--bg-color__100);
+}
+
+.custom_text2_color__200 {
+    color: var(--bg-color__200);
+}
+
+.custom_text2_color__300 {
+    color: var(--bg-color__300);
+}
+.custom_text2_color__400 {
+    color: var(--bg-color__400);
+}
+.custom_text2_color__500 {
+    color: var(--bg-color__500);
+}
+.custom_text2_color__900 {
+    color: var(--bg-color__900);
+}
