@@ -1,27 +1,32 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { auth, db } from "../server/firebase";
-import Room from "./ui/room";
-import useImageUpload from "../components/hook/useImageUpload";
-import useSendMessage from "../components/hook/useSendMessage";
 import {
     collection,
-    onSnapshot,
-    query,
-    orderBy,
-    where,
     doc,
     getDoc,
+    onSnapshot,
+    orderBy,
+    query,
+    where,
 } from "firebase/firestore";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import useImageUpload from "../components/hook/useImageUpload";
+import useSendMessage from "../components/hook/useSendMessage";
+import CustomModal from "../components/modal";
+import { auth, db } from "../server/firebase";
+import Room from "./ui/room";
 
-const ChatRoom = () => {
-
+const ChatRoom = ({
+    windowWidth,
+    handleSelected_List_Room,
+    current_List_Room
+}) => {
     const { userId } = useParams();
     const [messages, setMessages] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
     const chatHistoryRef = useRef(null);
-
     const imageInputRef = useRef(null);
+
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -75,6 +80,7 @@ const ChatRoom = () => {
         }
     };
 
+
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
@@ -83,7 +89,7 @@ const ChatRoom = () => {
     const { handleImageUpload } = useImageUpload(userId);
     //gửi tin nhắn
     const { sendMessage, newMessage, setNewMessage } = useSendMessage(userId, messages);
- 
+
     const formattedDate = (dateObj) => {
         const now = new Date();
         const options = { day: 'numeric', month: 'short' };
@@ -92,6 +98,24 @@ const ChatRoom = () => {
         }
         return new Intl.DateTimeFormat('default', options).format(dateObj);
     };
+
+    // modal
+    const handleOpenModal = () => {
+        setModalIsOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalIsOpen(false);
+    };
+
+    // Trạng thái cho việc hiển thị tất cả hình ảnh
+    const [showAllImages, setShowAllImages] = useState(false);
+
+    // Lọc danh sách tin nhắn để chỉ lấy các tin nhắn có hình ảnh
+    const imageMessages = messages.filter(message => message.imageUrl);
+
+    // Lấy danh sách hình ảnh dựa trên trạng thái hiển thị
+    const displayImages = showAllImages ? imageMessages : imageMessages.slice(0, 3);
     return (
         <>
             <Room
@@ -104,7 +128,21 @@ const ChatRoom = () => {
                 chatHistoryRef={chatHistoryRef}
                 handleImageUpload={handleImageUpload}
                 imageInputRef={imageInputRef}
-                formattedDate= {formattedDate}
+                formattedDate={formattedDate}
+                windowWidth={windowWidth}
+                handleSelected_List_Room={handleSelected_List_Room}
+                current_List_Room={current_List_Room}
+                Link={Link}
+
+                CustomModal={CustomModal}
+                modalIsOpen={modalIsOpen}
+                handleOpenModal={handleOpenModal}
+                handleCloseModal={handleCloseModal}
+
+                showAllImages={showAllImages}
+                setShowAllImages={setShowAllImages}
+                imageMessages={imageMessages}
+                displayImages={displayImages}
             />
         </>
     );

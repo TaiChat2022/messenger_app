@@ -13,7 +13,9 @@ const ChatMenu = ({
     resetMenus,
     handleMenuClick,
     selectedTheme,
-    handleThemeChange
+    handleThemeChange,
+    windowWidth,
+    handleSelected_List_Room
 }) => {
     const [user, setUser] = useState(null);
     const [currentModal, setCurrentModal] = useState('show_chung'); // Thêm state cho modal hiện tại
@@ -86,6 +88,8 @@ const ChatMenu = ({
 
                 selectedTheme = {selectedTheme}
                 handleThemeChange = {handleThemeChange}
+                windowWidth = {windowWidth}
+                handleSelected_List_Room ={handleSelected_List_Room}
             />
         </>
     );

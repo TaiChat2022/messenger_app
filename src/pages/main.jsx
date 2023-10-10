@@ -38,6 +38,40 @@ const Main = () => {
         };
     // END MENU
 
+    // RESPONSIVE
+        const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Lưu trữ kích thước màn hình
+        // Xác định kích thước màn hình và cập nhật state windowWidth
+        useEffect(() => {
+            const handleResize = () => {
+                setWindowWidth(window.innerWidth);
+            };
+            window.addEventListener("resize", handleResize);
+            return () => window.removeEventListener("resize", handleResize);
+        }, []);
+    // END RESPONSIVE
+
+    // SELECT List or room
+        const [current_List_Room, setCurrent_List_Room] = useState('selected_List');
+        const [selected_List_Room, setSelected_List_Room] = useState({
+            chatlist: true,
+            chatroom: false,
+        });
+        const resetSelected_List_Room = () => {
+            setSelected_List_Room({
+                chatlist: false,
+                chatroom: false,
+            });
+        };
+        const handleSelected_List_Room = (list_room) => {
+            resetSelected_List_Room();
+            setSelected_List_Room((prevState) => ({
+                ...prevState,
+                [list_room]: true,
+            }));
+            setCurrent_List_Room(list_room); 
+        };
+    // END SELECT List or room
+
     // Get current user
     const [user, setUser] = useState(null); 
     useEffect(() => {
@@ -95,26 +129,65 @@ const Main = () => {
         <>
             <div >
                 <div className="sm:ml-64">
-                    <div className="flex h-full rounded-lg dark:border-gray-700">
-                        {/* Chat menu*/}
-                        <ChatMenu
-                            currentMenu={currentMenu}
-                            selectedMenu={selectedMenu}
-                            resetMenus={resetMenus}
-                            handleMenuClick={handleMenuClick}
+                    <div className="flex h-full  rounded-lg dark:border-gray-700">
+                        <div className="z-50">
+                            {/* Chat menu*/}
+                            <ChatMenu
+                                currentMenu={currentMenu}
+                                selectedMenu={selectedMenu}
+                                resetMenus={resetMenus}
+                                handleMenuClick={handleMenuClick}
 
-                            selectedTheme ={selectedTheme}
-                            handleThemeChange={handleThemeChange}
-                        />
+                                selectedTheme ={selectedTheme}
+                                handleThemeChange={handleThemeChange}
+                                windowWidth= {windowWidth}
+                                handleSelected_List_Room = {handleSelected_List_Room}
+                            />
+                        </div>
                         <div className={`flex-auto w-full ${currentMenu === 'messenger' ? '' : 'hidden'}`}>
                             <div className="grid grid-cols-12">
-                                {/* Chat list */}
-                                <ListChat />
-                                {/* Chat room */}
-                                <Routes>
-                                    <Route path="/" element={<Xinchao />} />
-                                    <Route path=":userId" element={<ChatRoom/>}/>
-                                </Routes>
+                                {windowWidth < 500 ?
+                                    (
+                                        <>
+                                            {/* Chat list */}
+                                            <ListChat 
+                                                windowWidth = {windowWidth}
+                                                handleSelected_List_Room ={handleSelected_List_Room}
+                                                current_List_Room={current_List_Room}
+                                            />
+                                            {/* Chat room */}
+                                            <Routes>
+                                                <Route path="/" element={<Xinchao 
+                                                    windowWidth = {windowWidth}
+                                                    handleSelected_List_Room ={handleSelected_List_Room}
+                                                    current_List_Room={current_List_Room}
+                                                />} />
+                                                <Route path=":userId" element={<ChatRoom
+                                                    windowWidth ={windowWidth}
+                                                    handleSelected_List_Room ={handleSelected_List_Room}
+                                                    current_List_Room={current_List_Room}
+                                                />}/>
+                                            </Routes>
+                                        </>
+                                    ):(
+                                        <>
+                                            {/* Chat list */}
+                                            <ListChat
+                                                windowWidth = {windowWidth}
+                                            />
+                                            {/* Chat room */}
+                                            <Routes>
+                                                <Route path="/" element={<Xinchao 
+                                                    windowWidth = {windowWidth}
+                                                />} />
+                                                <Route path=":userId" element={<ChatRoom
+                                                    windowWidth ={windowWidth}
+                                                />}/>
+                                            </Routes>
+                                        </>
+                                    )
+                                }
+     
                             </div>
                         </div>
                         <div className={`flex-auto w-full ${currentMenu === 'messenger__shop' ? '' : 'hidden'}`}>

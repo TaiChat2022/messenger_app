@@ -2,7 +2,11 @@ import React , { useState, useEffect }from 'react';
 import List from './ui/list';
 import { auth, db } from '../server/firebase';
 import { collection, onSnapshot, query } from "firebase/firestore";
-const ListChat = () => {
+const ListChat = ({
+    windowWidth,
+    handleSelected_List_Room,
+    current_List_Room
+}) => {
     // LIST 
         //List select user và handler
             // chọn user
@@ -24,15 +28,7 @@ const ListChat = () => {
             });
             return () => unsubscribe();
         }, []);
-        const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Lưu trữ kích thước màn hình
-        // Xác định kích thước màn hình và cập nhật state windowWidth
-        useEffect(() => {
-            const handleResize = () => {
-                setWindowWidth(window.innerWidth);
-            };
-            window.addEventListener("resize", handleResize);
-            return () => window.removeEventListener("resize", handleResize);
-        }, []);
+        
         const currentUser = auth.currentUser;
         const displayName = currentUser ? currentUser.displayName : "";
         const photoURL = currentUser ? currentUser.photoURL : "";
@@ -57,6 +53,8 @@ const ListChat = () => {
                 userList =  {userList}
                 windowWidth ={windowWidth}
                 formattedDate= {formattedDate}
+                handleSelected_List_Room ={handleSelected_List_Room}
+                current_List_Room = {current_List_Room}
             />
         </>
     );

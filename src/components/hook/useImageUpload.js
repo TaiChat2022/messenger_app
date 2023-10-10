@@ -19,7 +19,7 @@ const useImageUpload = (userId) => {
       return;
     }
 
-    const storageRef = ref(storage, `images/${file.name}`);
+    const storageRef = ref(storage, `img/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
