@@ -1,19 +1,36 @@
+import { Backdrop, CircularProgress } from '@mui/material';
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Login from "./components/Login";
-import Main from './pages/main'
+import { Suspense, lazy } from 'react';
+
+const Login = lazy(() => import('./components/Login'));
+const Main = lazy(() => import('./pages/main'));
 
 function App() {
   return (
     <>
       <div className="App">
-          <Router>
+        <Router>
+          <Suspense
+            fallback={
+              <Backdrop
+                open
+                style={{
+                  zIndex: 10000,
+                }}
+                className="flex items-center justify-center"
+              >
+                <CircularProgress color="inherit" />
+              </Backdrop>
+            }
+          >
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/messenger/*" element={<Main />} />
             </Routes>
-          </Router>
+          </Suspense>
+        </Router>
       </div>
     </>
   );

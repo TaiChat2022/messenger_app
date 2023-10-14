@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import Menu from './ui/menu';
 import { Link } from 'react-router-dom';
 import { auth, firestore } from '../server/firebase';
 import Chung from './modal_list/chung';
 import GiaoDien from './modal_list/giaoDien';
 import ThongBao from './modal_list/thongBao';
 import TrangThai from './modal_list/trangThai';
+import MenuUI from './ui/menu';
+
+import Button from '@mui/material/Button';
+import Fade from '@mui/material/Fade';
+import Modal from '@mui/material/Modal';
+import Popper from '@mui/material/Popper';
+
 
 const ChatMenu = ({
     currentMenu,
@@ -68,28 +74,57 @@ const ChatMenu = ({
         }
     };
 
+    // Popover avatar
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [open, setOpen] = React.useState(false);
+    const [placement, setPlacement] = React.useState();
+
+    const handleClick = (newPlacement) => (event) => {
+        setAnchorEl(event.currentTarget);
+        setOpen((prev) => placement !== newPlacement || !prev);
+        setPlacement(newPlacement);
+    };
+    // Modal 
+    const [openModal, setOpenModal] = React.useState(false);
+    const handleOpenModal = () => setOpenModal(true);
+    const handleCloseModal = () => setOpenModal(false);
+
     return (
         <>
-            <Menu
-                currentMenu = {currentMenu}
-                selectedMenu = {selectedMenu}
-                resetMenus = {resetMenus}
-                handleMenuClick = {handleMenuClick}
-                Link = {Link}
-                currentModal = {currentModal}
-                user = {user}
-                modal_list = {modal_list}
-                signOut = {signOut}
-                handleModalList = {handleModalList}
-                Chung ={Chung}
-                GiaoDien= {GiaoDien}
+            <MenuUI
+                currentMenu={currentMenu}
+                selectedMenu={selectedMenu}
+                resetMenus={resetMenus}
+                handleMenuClick={handleMenuClick}
+                Link={Link}
+                currentModal={currentModal}
+                user={user}
+                modal_list={modal_list}
+                signOut={signOut}
+                handleModalList={handleModalList}
+                Chung={Chung}
+                GiaoDien={GiaoDien}
                 ThongBao={ThongBao}
-                TrangThai ={TrangThai}
+                TrangThai={TrangThai}
 
-                selectedTheme = {selectedTheme}
-                handleThemeChange = {handleThemeChange}
-                windowWidth = {windowWidth}
-                handleSelected_List_Room ={handleSelected_List_Room}
+                selectedTheme={selectedTheme}
+                handleThemeChange={handleThemeChange}
+                windowWidth={windowWidth}
+                handleSelected_List_Room={handleSelected_List_Room}
+
+                Button={Button}
+                Fade={Fade}
+                Popper={Popper}
+                Modal={Modal}
+
+                anchorEl={anchorEl}
+                placement={placement}
+                open={open}
+                handleClick={handleClick}
+
+                openModal={openModal}
+                handleOpenModal={handleOpenModal}
+                handleCloseModal={handleCloseModal}
             />
         </>
     );

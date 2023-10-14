@@ -1,5 +1,5 @@
-import React,{useState} from 'react';
-import InBox from './ui/inBox'
+import React, { useState } from 'react';
+import InBox from './ui/inBox';
 const Chat_inbox = () => {
     const [currentInbox, setCurrentInbox] = useState('show_coTheBiet');
     const [Inbox_list, setInbox_list] = useState({
@@ -17,15 +17,15 @@ const Chat_inbox = () => {
         resetInbox(); // Đặt lại tất cả các modal
         setInbox_list((prevState) => ({
             ...prevState,
-            [select_inbox]: true, 
+            [select_inbox]: true,
         }));
-        setCurrentInbox(select_inbox); 
+        setCurrentInbox(select_inbox);
     };
     return (
         <>
             <InBox
-                currentInbox ={currentInbox}
-                handleInbox = {handleInbox}
+                currentInbox={currentInbox}
+                handleInbox={handleInbox}
             />
         </>
     );
