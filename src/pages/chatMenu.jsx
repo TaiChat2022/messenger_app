@@ -12,7 +12,6 @@ import Fade from '@mui/material/Fade';
 import Modal from '@mui/material/Modal';
 import Popper from '@mui/material/Popper';
 
-
 const ChatMenu = ({
     currentMenu,
     selectedMenu,
