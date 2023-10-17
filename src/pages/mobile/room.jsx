@@ -51,31 +51,30 @@ const MobileRoom = ({
                     {/* end user info */}
                     {/* chat box action */}
                     <div className="custom_text_color__100">
-                        <button className="inline-flex hover:bg-indigo-50 rounded-full p-2 cursor-pointer" type="button">
+                        <button className="inline-flex hover:bg-gray-600 rounded-full p-2 cursor-pointer" type="button">
                             <i className="bi bi-telephone-fill text-sm"></i>
                         </button>
-                        <button className="inline-flex hover:bg-indigo-50 rounded-full p-2 cursor-pointer" type="button">
+                        <button className="inline-flex hover:bg-gray-600 rounded-full p-2 cursor-pointer" type="button">
                             <i className="bi bi-camera-video-fill text-sm"></i>
                         </button>
-                        <button className="inline-flex hover:bg-indigo-50 rounded-full p-2 cursor-pointer" type="button">
+                        <button className="inline-flex hover:bg-gray-600 rounded-full p-2 cursor-pointer" type="button">
                             <i className="bi bi-search text-sm"></i>
                         </button>
                         <button
                             onClick={handleOpenModal}
-                            className="inline-flex hover:bg-indigo-50 rounded-full p-2 cursor-pointer" type="button">
+                            className="inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer" type="button">
                             <i className="bi bi-three-dots text-sm"></i>
                         </button>
                     </div>
                     {/* end chat box action */}
                 </div>
-                <div className="flex-1  py-4 overflow-y-auto">
+                <div className="flex-1 py-4 overflow-y-auto">
                     {/* chat message */}
                     <div className="flex-none flex-col items-center flex-row-reverse justify-between mb-4 custom_text_color__200" ref={chatHistoryRef}>
                         {messages.map((message, index) => {
                             const currentDate = message.createdAt && typeof message.createdAt.toDate === "function"
                                 ? formattedDate(message.createdAt.toDate())
                                 : null;
-
                             const prevMessage = index > 0 ? messages[index - 1] : null;
                             const prevDate = prevMessage && typeof prevMessage.createdAt.toDate === "function"
                                 ? formattedDate(prevMessage.createdAt.toDate())
@@ -138,7 +137,6 @@ const MobileRoom = ({
                     </div>
                     {/* end chat message */}
                 </div>
-
                 <div className="flex items-center border-t border-gray-800 p-2">
                     {/* chat input img action */}
                     <div className="custom_text_color__100">

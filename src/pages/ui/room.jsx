@@ -80,18 +80,18 @@ const Room = ({
                                 {/* end user info */}
                                 {/* chat box action */}
                                 <div className="custom_text_color__100">
-                                    <button className="inline-flex hover:bg-indigo-50 rounded-full p-2 cursor-pointer" type="button">
+                                    <button className="inline-flex hover:bg-gray-600 rounded-full p-2 cursor-pointer" type="button">
                                         <i className="bi bi-telephone-fill text-lg"></i>
                                     </button>
-                                    <button className="inline-flex hover:bg-indigo-50 rounded-full p-2 cursor-pointer" type="button">
+                                    <button className="inline-flex hover:bg-gray-600 rounded-full p-2 cursor-pointer" type="button">
                                         <i className="bi bi-camera-video-fill text-lg"></i>
                                     </button>
-                                    <button className="inline-flex hover:bg-indigo-50 rounded-full p-2 cursor-pointer" type="button">
+                                    <button className="inline-flex hover:bg-gray-600 rounded-full p-2 cursor-pointer" type="button">
                                         <i className="bi bi-search text-lg"></i>
                                     </button>
                                     <button
                                         onClick={handleOpenModal}
-                                        className={`inline-flex hover:bg-indigo-50 rounded-full px-2 py-1 cursor-pointer`}
+                                        className={`inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer`}
                                         type="button">
                                         <i className="bi bi-three-dots text-lg"></i>
                                     </button>
@@ -169,7 +169,7 @@ const Room = ({
                             <div className="flex items-center border-t border-gray-800 p-2">
                                 {/* chat input img action */}
                                 <div className="custom_text_color__100">
-                                    <button className="inline-flex hover:bg-indigo-50 rounded-full p-2" type="button">
+                                    <button className="inline-flex hover:bg-gray-600 rounded-full p-2" type="button">
                                         <input type="file" onChange={handleImageUpload} style={{ display: 'none' }} ref={imageInputRef} />
                                         <span className="icon-chat" onClick={() => imageInputRef.current.click()}>
                                             <i className="bi bi-image text-2xl"></i>
@@ -194,7 +194,7 @@ const Room = ({
                                 </div>
                                 {/* chat send action */}
                                 <div className="custom_text_color__100">
-                                    <button className="inline-flex hover:bg-indigo-50 rounded-full p-2" type="button" onClick={sendMessage}>
+                                    <button className="inline-flex hover:bg-gray-600 rounded-full p-2" type="button" onClick={sendMessage}>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-send-fill  w-6 h-6" viewBox="0 0 16 16">
                                             <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
                                         </svg>
