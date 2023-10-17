@@ -13,7 +13,7 @@ export default function MenuUI({
 }) {
     return (
         <>
-            {windowWidth < 550 ? (
+            {windowWidth < 570 ? (
                 <>
                     <div className='flex relative w-16'>
                         <div className="h-screen grid grid-cols-1 content-between px-2 pb-2 backdrop-blur-md custom_bg_color__400 dark:bg-gray-800 w-full rounded-l-lg ">
@@ -185,7 +185,7 @@ export default function MenuUI({
                                             </div>
 
                                             {/* option right */}
-                                            <div className="flex-auto items-start justify-start col-span-3 h-24 custom_text_color__100 overflow-x-hidden overflow-y-auto h-full rounded-lg">
+                                            <div className="flex-auto items-start justify-start col-span-3 custom_text_color__100 overflow-x-hidden overflow-y-auto h-full rounded-lg">
                                                 <div className={currentModal === 'show_chung' ? '' : 'hidden'}>
                                                     <Chung
                                                         handleCloseModal={handleCloseModal}
@@ -441,7 +441,7 @@ export default function MenuUI({
                                                 </div>
 
                                                 {/* option right */}
-                                                <div className="flex-auto items-start col-span-1 justify-start h-24 custom_text_color__100 overflow-x-hidden overflow-y-auto h-full rounded-lg">
+                                                <div className="flex-auto items-start col-span-1 justify-start  custom_text_color__100 overflow-x-hidden overflow-y-auto h-full rounded-lg">
                                                     <div className={currentModal === 'show_chung' ? '' : 'hidden'}>
                                                         <Chung
                                                             handleCloseModal={handleCloseModal}

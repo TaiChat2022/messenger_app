@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import { useDocsQuery } from '../hooks/firestore';
 import { auth } from '../server/firebase';
+import MobileList from './mobile/list';
 import List from './ui/list';
 const ListChat = ({
     windowWidth,
@@ -39,12 +41,15 @@ const ListChat = ({
                 selectUser={selectUser}
                 handleUserClick={handleUserClick}
                 currentUser={currentUser}
+                Link={Link}
                 auth={auth}
                 userList={userList}
                 windowWidth={windowWidth}
                 formattedDate={formattedDate}
                 handleSelected_List_Room={handleSelected_List_Room}
                 current_List_Room={current_List_Room}
+
+                MobileList={MobileList}
             />
         </>
     );

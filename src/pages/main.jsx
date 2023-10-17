@@ -127,103 +127,99 @@ const Main = () => {
     // END Đổi màu giao diện 
     return (
         <>
-            <div >
-                <div className="sm:ml-64">
-                    <div className="flex h-full  rounded-lg dark:border-gray-700">
-                        <div className="z-50">
-                            {/* Chat menu*/}
-                            <ChatMenu
-                                currentMenu={currentMenu}
-                                selectedMenu={selectedMenu}
-                                resetMenus={resetMenus}
-                                handleMenuClick={handleMenuClick}
+            <div className="flex h-full rounded-lg dark:border-gray-700">
+                <div className="z-50">
+                    {/* Chat menu*/}
+                    <ChatMenu
+                        currentMenu={currentMenu}
+                        selectedMenu={selectedMenu}
+                        resetMenus={resetMenus}
+                        handleMenuClick={handleMenuClick}
 
-                                selectedTheme={selectedTheme}
-                                handleThemeChange={handleThemeChange}
-                                windowWidth={windowWidth}
-                                handleSelected_List_Room={handleSelected_List_Room}
-                            />
-                        </div>
-                        <div className={`flex-auto w-full ${currentMenu === 'messenger' ? '' : 'hidden'}`}>
-                            <div className="grid grid-cols-12">
-                                {windowWidth < 550 ?
-                                    (
-                                        <>
-                                            {/* Chat list */}
-                                            <ListChat
-                                                windowWidth={windowWidth}
-                                                handleSelected_List_Room={handleSelected_List_Room}
-                                                current_List_Room={current_List_Room}
-                                            />
-                                            {/* Chat room */}
-                                            <Routes>
-                                                <Route path="/" element={<Xinchao
-                                                    windowWidth={windowWidth}
-                                                    handleSelected_List_Room={handleSelected_List_Room}
-                                                    current_List_Room={current_List_Room}
-                                                />} />
-                                                <Route path=":userId" element={<ChatRoom
-                                                    windowWidth={windowWidth}
-                                                    handleSelected_List_Room={handleSelected_List_Room}
-                                                    current_List_Room={current_List_Room}
-                                                />} />
-                                            </Routes>
-                                        </>
-                                    ) : (
-                                        <>
-                                            {/* Chat list */}
-                                            <ListChat
-                                                windowWidth={windowWidth}
-                                            />
-                                            {/* Chat room */}
-                                            <Routes>
-                                                <Route path="/" element={<Xinchao
-                                                    windowWidth={windowWidth}
-                                                />} />
-                                                <Route path=":userId" element={<ChatRoom
-                                                    windowWidth={windowWidth}
-                                                />} />
-                                            </Routes>
-                                        </>
-                                    )
-                                }
+                        selectedTheme={selectedTheme}
+                        handleThemeChange={handleThemeChange}
+                        windowWidth={windowWidth}
+                        handleSelected_List_Room={handleSelected_List_Room}
+                    />
+                </div>
+                <div className={`flex-auto w-full ${currentMenu === 'messenger' ? '' : 'hidden'}`}>
+                    <div className="grid grid-cols-12">
+                        {windowWidth < 570 ?
+                            (
+                                <>
+                                    {/* Chat list */}
+                                    <ListChat
+                                        windowWidth={windowWidth}
+                                        handleSelected_List_Room={handleSelected_List_Room}
+                                        current_List_Room={current_List_Room}
+                                    />
+                                    {/* Chat room */}
+                                    <Routes>
+                                        <Route path="/" element={<Xinchao
+                                            windowWidth={windowWidth}
+                                            handleSelected_List_Room={handleSelected_List_Room}
+                                            current_List_Room={current_List_Room}
+                                        />} />
+                                        <Route path=":userId" element={<ChatRoom
+                                            windowWidth={windowWidth}
+                                            handleSelected_List_Room={handleSelected_List_Room}
+                                            current_List_Room={current_List_Room}
+                                        />} />
+                                    </Routes>
+                                </>
+                            ) : (
+                                <>
+                                    {/* Chat list */}
+                                    <ListChat
+                                        windowWidth={windowWidth}
+                                    />
+                                    {/* Chat room */}
+                                    <Routes>
+                                        <Route path="/" element={<Xinchao
+                                            windowWidth={windowWidth}
+                                        />} />
+                                        <Route path=":userId" element={<ChatRoom
+                                            windowWidth={windowWidth}
+                                        />} />
+                                    </Routes>
+                                </>
+                            )
+                        }
 
-                            </div>
-                        </div>
-                        <div className={`flex-auto w-full ${currentMenu === 'messenger__shop' ? '' : 'hidden'}`}>
-                            <div className="grid grid-cols-12">
-                                {/* Chat maketing */}
-                                <Shop />
-                                {/* Chat room */}
-                                {/* Chat room */}
-                                <Routes>
-                                    <Route path="/" element={<Xinchao />} />
-                                    <Route path=":userId" element={<ChatRoom />} />
-                                </Routes>
-                            </div>
-                        </div>
-                        <div className={`flex-auto w-full ${currentMenu === 'messenger__inbox' ? '' : 'hidden'}`}>
-                            <div className="grid grid-cols-12">
-                                {/* Chat inBox */}
-                                <Chat_inbox />
-                                {/* Chat room */}
-                                <Routes>
-                                    <Route path="/" element={<Xinchao />} />
-                                    <Route path=":userId" element={<ChatRoom />} />
-                                </Routes>
-                            </div>
-                        </div>
-                        <div className={`flex-auto w-full ${currentMenu === 'messenger__savemessage' ? '' : 'hidden'}`}>
-                            <div className="grid grid-cols-12">
-                                {/* Chat lưu trữ */}
-                                <Save_mess />
-                                {/* Chat room */}
-                                <Routes>
-                                    <Route path="/" element={<Xinchao />} />
-                                    <Route path=":userId" element={<ChatRoom />} />
-                                </Routes>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                <div className={`flex-auto w-full ${currentMenu === 'messenger__shop' ? '' : 'hidden'}`}>
+                    <div className="grid grid-cols-12">
+                        {/* Chat maketing */}
+                        <Shop />
+                        {/* Chat room */}
+                        {/* Chat room */}
+                        <Routes>
+                            <Route path="/" element={<Xinchao />} />
+                            <Route path=":userId" element={<ChatRoom />} />
+                        </Routes>
+                    </div>
+                </div>
+                <div className={`flex-auto w-full ${currentMenu === 'messenger__inbox' ? '' : 'hidden'}`}>
+                    <div className="grid grid-cols-12">
+                        {/* Chat inBox */}
+                        <Chat_inbox />
+                        {/* Chat room */}
+                        <Routes>
+                            <Route path="/" element={<Xinchao />} />
+                            <Route path=":userId" element={<ChatRoom />} />
+                        </Routes>
+                    </div>
+                </div>
+                <div className={`flex-auto w-full ${currentMenu === 'messenger__savemessage' ? '' : 'hidden'}`}>
+                    <div className="grid grid-cols-12">
+                        {/* Chat lưu trữ */}
+                        <Save_mess />
+                        {/* Chat room */}
+                        <Routes>
+                            <Route path="/" element={<Xinchao />} />
+                            <Route path=":userId" element={<ChatRoom />} />
+                        </Routes>
                     </div>
                 </div>
             </div>

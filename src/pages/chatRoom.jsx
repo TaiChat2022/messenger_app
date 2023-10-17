@@ -13,6 +13,7 @@ import { Link, useParams } from "react-router-dom";
 import useImageUpload from "../components/hook/useImageUpload";
 import useSendMessage from "../components/hook/useSendMessage";
 import { auth, db } from "../server/firebase";
+import MobileRoom from './mobile/room';
 import Room from "./ui/room";
 
 const ChatRoom = ({
@@ -137,6 +138,8 @@ const ChatRoom = ({
                 setShowAllImages={setShowAllImages}
                 imageMessages={imageMessages}
                 displayImages={displayImages}
+
+                MobileRoom={MobileRoom}
             />
         </>
     );
