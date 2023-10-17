@@ -13,7 +13,7 @@ export default function MenuUI({
 }) {
     return (
         <>
-            {windowWidth < 500 ? (
+            {windowWidth < 550 ? (
                 <>
                     <div className='flex relative w-16'>
                         <div className="h-screen grid grid-cols-1 content-between px-2 pb-2 backdrop-blur-md custom_bg_color__400 dark:bg-gray-800 w-full rounded-l-lg ">
@@ -77,7 +77,7 @@ export default function MenuUI({
                                     </Button>
                                     <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
                                         {({ TransitionProps }) => (
-                                            <Fade {...TransitionProps} timeout={350}>
+                                            <Fade {...TransitionProps} timeout={150}>
                                                 <div className="z-50 ml-2 mb-4  custom_bg_color__400 rounded-lg shadow w-44 dark:bg-gray-700">
                                                     <ul className="py-1 text-sm shadow-lg custom_text_color__300 divide-y divide-gray-500" aria-labelledby="doubleDropdownButton">
                                                         <li>
@@ -302,7 +302,7 @@ export default function MenuUI({
                                         </Button>
                                         <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
                                             {({ TransitionProps }) => (
-                                                <Fade {...TransitionProps} timeout={350}>
+                                                <Fade {...TransitionProps} timeout={150}>
                                                     <div className="z-50 ml-2 mb-4 custom_bg_color__400 rounded-lg shadow w-44 dark:bg-gray-700">
                                                         <ul className="py-1 text-sm shadow-lg custom_text_color__300 divide-y divide-gray-500" aria-labelledby="doubleDropdownButton">
                                                             <li>

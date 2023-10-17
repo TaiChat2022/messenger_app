@@ -10,13 +10,13 @@ const Room = ({
     formattedDate, windowWidth, Link,
     handleSelected_List_Room, current_List_Room,
 
-    CustomModal, modalIsOpen, handleOpenModal, handleCloseModal,
+    Modal, openModal, handleOpenModal, handleCloseModal,
     showAllImages, setShowAllImages, imageMessages, displayImages
 }) => {
     // console.log(messages); 
     return (
         <>
-            {windowWidth < 500 ? (
+            {windowWidth < 550 ? (
                 <>
                     {/* chat box */}
                     <div className={`w-auto border-l border-gray-800 h-screen col-span-12 flex flex-col rounded-r-lg shadow-md custom_bg_color__100 ${current_List_Room === 'chatroom' ? '' : 'hidden'}`}>
@@ -32,7 +32,7 @@ const Room = ({
                                 </div>
                                 <img className="rounded-full w-7 h-7 object-cover" src={currentUser ? currentUser.photoURL : ''} />
                                 <div className="pl-2">
-                                    <div className="font-semibold custom_text_color__100 text-xs">
+                                    <div className="font-semibold custom_text_color__100 text-xs md:text-lg">
                                         <a className="hover:underline" href="#">{currentUser ? currentUser.displayName : ''}</a>
                                     </div>
                                     <div className="text-xs custom_text_color__300 flex items-center">
@@ -190,7 +190,7 @@ const Room = ({
                                 <div className="flex items-center">
                                     <img className="rounded-full w-10 h-10 object-cover" src={currentUser ? currentUser.photoURL : ''} />
                                     <div className="pl-2">
-                                        <div className="font-semibold custom_text_color__100">
+                                        <div className="font-semibold custom_text_color__100 text-xs md:text-lg">
                                             <a className="hover:underline" href="#">{currentUser ? currentUser.displayName : ''}</a>
                                         </div>
                                         <div className="text-xs custom_text_color__300 flex items-center">
@@ -215,18 +215,19 @@ const Room = ({
                                 {/* chat box action */}
                                 <div className="custom_text_color__100">
                                     <button className="inline-flex hover:bg-indigo-50 rounded-full p-2 cursor-pointer" type="button">
-                                        <i className="bi bi-telephone-fill text-2xl"></i>
+                                        <i className="bi bi-telephone-fill text-lg"></i>
                                     </button>
                                     <button className="inline-flex hover:bg-indigo-50 rounded-full p-2 cursor-pointer" type="button">
-                                        <i className="bi bi-camera-video-fill text-2xl"></i>
+                                        <i className="bi bi-camera-video-fill text-lg"></i>
                                     </button>
                                     <button className="inline-flex hover:bg-indigo-50 rounded-full p-2 cursor-pointer" type="button">
-                                        <i className="bi bi-search text-2xl"></i>
+                                        <i className="bi bi-search text-lg"></i>
                                     </button>
                                     <button
                                         onClick={handleOpenModal}
-                                        className="inline-flex hover:bg-indigo-50 rounded-full p-2 cursor-pointer" type="button">
-                                        <i className="bi bi-three-dots text-2xl"></i>
+                                        className={`inline-flex hover:bg-indigo-50 rounded-full px-2 py-1 cursor-pointer`}
+                                        type="button">
+                                        <i className="bi bi-three-dots text-lg"></i>
                                     </button>
                                 </div>
                                 {/* end chat box action */}
@@ -340,10 +341,11 @@ const Room = ({
                     </>
                 )
             }
-            <CustomModal
-                className="flex"
-                modalIsOpen={modalIsOpen}
-                handleCloseModal={handleCloseModal}
+            <Modal
+                open={openModal}
+                onClose={handleCloseModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
             >
                 <div className="absolute top-16 right-2 w-37 h-full ">
                     {/* Modal content */}
@@ -523,7 +525,7 @@ const Room = ({
                         </div>
                     </div>
                 </div>
-            </CustomModal>
+            </Modal>
         </>
     );
 };

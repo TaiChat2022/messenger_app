@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .hover_close_modal:hover {
   /* transition: .3s ease-in-out; */
   color: #f1f1f1;

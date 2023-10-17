@@ -1,3 +1,4 @@
+import Modal from "@mui/material/Modal";
 import {
     collection,
     doc,
@@ -11,7 +12,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import useImageUpload from "../components/hook/useImageUpload";
 import useSendMessage from "../components/hook/useSendMessage";
-import CustomModal from "../components/modal";
 import { auth, db } from "../server/firebase";
 import Room from "./ui/room";
 
@@ -25,8 +25,6 @@ const ChatRoom = ({
     const [currentUser, setCurrentUser] = useState(null);
     const chatHistoryRef = useRef(null);
     const imageInputRef = useRef(null);
-
-    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -80,7 +78,6 @@ const ChatRoom = ({
         }
     };
 
-
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
@@ -99,14 +96,11 @@ const ChatRoom = ({
         return new Intl.DateTimeFormat('default', options).format(dateObj);
     };
 
-    // modal
-    const handleOpenModal = () => {
-        setModalIsOpen(true);
-    };
+    // Modal
+    const [openModal, setOpenModal] = React.useState(false);
+    const handleOpenModal = () => setOpenModal(true);
+    const handleCloseModal = () => setOpenModal(false);
 
-    const handleCloseModal = () => {
-        setModalIsOpen(false);
-    };
 
     // Trạng thái cho việc hiển thị tất cả hình ảnh
     const [showAllImages, setShowAllImages] = useState(false);
@@ -134,8 +128,8 @@ const ChatRoom = ({
                 current_List_Room={current_List_Room}
                 Link={Link}
 
-                CustomModal={CustomModal}
-                modalIsOpen={modalIsOpen}
+                Modal={Modal}
+                openModal={openModal}
                 handleOpenModal={handleOpenModal}
                 handleCloseModal={handleCloseModal}
 
