@@ -1,37 +1,28 @@
-import React from 'react';
-
-const MobileRoom = ({
-    currentUser, messages,
+const ChatGroupUI = ({
+    chatGroup, messages,
     newMessage, setNewMessage, sendMessage,
     auth, chatHistoryRef,
     handleImageUpload, imageInputRef,
-    formattedDate, Link,
-    handleSelected_List_Room, current_List_Room,
+    formattedDate,
+    sendGroupMessage,
 
-    Modal, handleOpenModal,
-    anchorSearchBar, openSearchBar, handleClickSearchBar, handleCloseSearchBar
+    windowWidth, Link,
+    handleSelected_List_Room, current_List_Room,
 }) => {
     return (
         <>
             {/* chat box */}
-            <div className={`w-auto border-l border-gray-800 h-screen col-span-12 flex flex-col rounded-r-lg shadow-md custom_bg_color__100 ${current_List_Room === 'chatroom' ? '' : 'hidden'}`}>
+            <div className="w-auto border-l border-gray-800 h-screen col-span-9 flex flex-col rounded-r-lg shadow-md custom_bg_color__100">
                 <div className="flex items-center justify-between border-b border-gray-800 p-2">
                     {/* user info */}
                     <div className="flex items-center">
-                        <div className="custom_text_color__100">
-                            <Link className="inline-flex hover:bg-indigo-50 rounded-full p-2 cursor-pointer"
-                                onClick={() => handleSelected_List_Room('chatlist')}
-                                type="button">
-                                <i className="bi bi-chevron-left text-sm"></i>
-                            </Link>
-                        </div>
-                        <img className="rounded-full w-7 h-7 object-cover" src={currentUser ? currentUser.photoURL : ''} />
+                        <img className="rounded-full w-10 h-10 object-cover" src={chatGroup ? chatGroup.photoURL : ''} />
                         <div className="pl-2">
                             <div className="font-semibold custom_text_color__100 text-xs md:text-lg">
-                                <a className="hover:underline" href="#">{currentUser ? currentUser.displayName : ''}</a>
+                                <a className="hover:underline" href="#">{chatGroup ? chatGroup.tenGroup : ''}</a>
                             </div>
                             <div className="text-xs custom_text_color__300 flex items-center">
-                                {currentUser?.isOnline ?
+                                {chatGroup?.isOnline ?
                                     (
                                         <>
                                             <div className="w-4 h-4 bg-green-600 border-black border-2 rounded-full border-solid"></div>
@@ -51,70 +42,32 @@ const MobileRoom = ({
                     {/* end user info */}
                     {/* chat box action */}
                     <div className="custom_text_color__100">
-                        <button className="inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer" type="button">
-                            <i className="bi bi-telephone-fill text-sm"></i>
+                        <button className="inline-flex hover:bg-gray-600 rounded-full p-2 cursor-pointer" type="button">
+                            <i className="bi bi-telephone-fill text-lg"></i>
                         </button>
-                        <button className="inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer" type="button">
-                            <i className="bi bi-camera-video-fill text-sm"></i>
+                        <button className="inline-flex hover:bg-gray-600 rounded-full p-2 cursor-pointer" type="button">
+                            <i className="bi bi-camera-video-fill text-lg"></i>
                         </button>
-                        <button
-                            id="fade-button"
-                            aria-controls={openSearchBar ? 'fade-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={openSearchBar ? 'true' : undefined}
-                            onClick={handleClickSearchBar}
-                            className="inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer"
-                            type="button"
-                        >
+                        <button className="inline-flex hover:bg-gray-600 rounded-full p-2 cursor-pointer" type="button">
                             <i className="bi bi-search text-lg"></i>
                         </button>
-                        <Modal
-                            MenuListProps={{
-                                'aria-labelledby': 'fade-button',
-                            }}
-                            anchorEl={anchorSearchBar}
-                            open={openSearchBar}
-                            onClose={handleCloseSearchBar}
-                        >
-                            <div
-                                className={`
-                                    flex items-center pl-2
-                                    custom_bg_color__300 custom_text_color__200 
-                                    w-64 h-12 absolute
-                                    top-12 right-8
-                                `}
-                            >
-                                {/* Thanh tìm kiếm */}
-                                <div className="rounded overflow-hidden md:max-w-xl mx-2">
-                                    <div className="flex items-center w-full">
-                                        <i className="bi bi-search bg custom_text_color__200 text-xs md:text-sm" />
-                                        <input type="text"
-                                            placeholder="Tìm kiếm"
-                                            className={`
-                                                    custom_bg_color__300 custom_text_color__100 
-                                                    text-xsmd:text-sm h-12 w-full
-                                                    px-4 rounded focus:outline-none hover:cursor-pointer
-                                            `}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </Modal>
                         <button
-                            onClick={handleOpenModal}
-                            className="inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer" type="button">
-                            <i className="bi bi-three-dots text-sm"></i>
+                            // onClick={handleOpenModal}
+                            className={`inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer`}
+                            type="button">
+                            <i className="bi bi-three-dots text-lg"></i>
                         </button>
                     </div>
                     {/* end chat box action */}
                 </div>
-                <div className="flex-1 py-4 overflow-y-auto">
+                <div className="flex-1  py-4 overflow-y-auto">
                     {/* chat message */}
                     <div className="flex-none flex-col items-center flex-row-reverse justify-between mb-4 custom_text_color__200" ref={chatHistoryRef}>
                         {messages.map((message, index) => {
                             const currentDate = message.createdAt && typeof message.createdAt.toDate === "function"
                                 ? formattedDate(message.createdAt.toDate())
                                 : null;
+
                             const prevMessage = index > 0 ? messages[index - 1] : null;
                             const prevDate = prevMessage && typeof prevMessage.createdAt.toDate === "function"
                                 ? formattedDate(prevMessage.createdAt.toDate())
@@ -126,19 +79,16 @@ const MobileRoom = ({
                                             {currentDate}
                                         </div>
                                     )}
-                                    {message.uid === auth.currentUser?.uid ? (
+                                    {message.uid === auth.chatGroup?.uid ? (
                                         <>
                                             <div className='flex flex-col items-end mr-4 ml-16'>
                                                 <div className={`
-                                                    bg-blue-700 p-4 rounded-lg mb-1 relative text-left text-white
-                                                `}>
+                                                                bg-blue-700 p-4 rounded-lg mb-1 relative text-left text-white
+                                                            `}>
                                                     <div>
                                                         {message.text}
-                                                        {message.imageUrl && <img className='rounded-lg' width={300} height={300} src={message.imageUrl} alt="Message" />}
+                                                        {message.imageUrl && <img width={300} height={300} src={message.imageUrl} alt="Message" />}
                                                     </div>
-                                                </div>
-                                                <div>
-
                                                 </div>
                                                 <div className="flex items-center mr-1">
                                                     {message.createdAt && typeof message.createdAt.toDate === "function"
@@ -154,9 +104,9 @@ const MobileRoom = ({
                                                 <div className='flex flex-col items-start ml-4 mr-16'>
 
                                                     <div className={`
-                                                    custom_bg_color__300 p-4 rounded-lg 
-                                                    mb-1 relative max-w-lg text-left
-                                                `}>
+                                                                custom_bg_color__300 p-4 rounded-lg 
+                                                                mb-1 relative max-w-lg text-left
+                                                            `}>
                                                         <div>
                                                             {message.text}
                                                             {message.imageUrl && <img width={300} height={300} src={message.imageUrl} alt="Message" />}
@@ -177,10 +127,11 @@ const MobileRoom = ({
                     </div>
                     {/* end chat message */}
                 </div>
+
                 <div className="flex items-center border-t border-gray-800 p-2">
                     {/* chat input img action */}
                     <div className="custom_text_color__100">
-                        <button className="inline-flex hover:bg-indigo-50 rounded-full p-2" type="button">
+                        <button className="inline-flex hover:bg-gray-600 rounded-full p-2" type="button">
                             <input type="file" onChange={handleImageUpload} style={{ display: 'none' }} ref={imageInputRef} />
                             <span className="icon-chat" onClick={() => imageInputRef.current.click()}>
                                 <i className="bi bi-image text-2xl"></i>
@@ -205,7 +156,7 @@ const MobileRoom = ({
                     </div>
                     {/* chat send action */}
                     <div className="custom_text_color__100">
-                        <button className="inline-flex hover:bg-indigo-50 rounded-full p-2" type="button" onClick={sendMessage}>
+                        <button className="inline-flex hover:bg-gray-600 rounded-full p-2" type="button" onClick={sendGroupMessage}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-send-fill  w-6 h-6" viewBox="0 0 16 16">
                                 <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
                             </svg>
@@ -219,4 +170,4 @@ const MobileRoom = ({
     );
 };
 
-export default MobileRoom;
+export default ChatGroupUI;

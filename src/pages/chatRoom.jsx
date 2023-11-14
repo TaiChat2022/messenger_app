@@ -1,12 +1,14 @@
 import Modal from "@mui/material/Modal";
 import {
+    arrayUnion,
     collection,
     doc,
     getDoc,
     onSnapshot,
     orderBy,
     query,
-    where,
+    updateDoc,
+    where
 } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -15,7 +17,6 @@ import useSendMessage from "../components/hook/useSendMessage";
 import { auth, db } from "../server/firebase";
 import MobileRoom from './mobile/room';
 import Room from "./ui/room";
-
 const ChatRoom = ({
     windowWidth,
     handleSelected_List_Room,
@@ -35,6 +36,7 @@ const ChatRoom = ({
                     where("participants", "array-contains", user.uid),
                     orderBy("createdAt")
                 );
+
                 const unsubscribeSnapshot = onSnapshot(q, (snapshot) => {
                     const messageList = [];
                     snapshot.forEach((doc) => {
@@ -64,21 +66,21 @@ const ChatRoom = ({
                 if (userDocument.exists()) {
                     setCurrentUser(userDocument.data());
                 } else {
-                    console.log("Không tìm thấy user này!");
+                    console.log("function undefined!");
                 }
             } else {
-                console.log("ID người dùng không hợp lệ!");
+                console.log("userId is undefined");
             }
         };
 
         fetchUser();
     }, [userId]);
+
     const scrollToBottom = () => {
         if (chatHistoryRef.current) {
             chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
         }
     };
-
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
@@ -102,7 +104,6 @@ const ChatRoom = ({
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
 
-
     // Trạng thái cho việc hiển thị tất cả hình ảnh
     const [showAllImages, setShowAllImages] = useState(false);
 
@@ -111,6 +112,31 @@ const ChatRoom = ({
 
     // Lấy danh sách hình ảnh dựa trên trạng thái hiển thị
     const displayImages = showAllImages ? imageMessages : imageMessages.slice(0, 3);
+
+    const handleSaveMessage = (e) => {
+        const userId = currentUser.uid; // ví dụ: currentUser có thể là state hoặc context chứa thông tin người dùng
+        // Reference đến document người dùng trong Firestore
+        const userDocRef = doc(db, "users", userId);
+        updateDoc(userDocRef, {
+            saveMessage: arrayUnion(messages.id) // Add the messageId to saveMessage field
+        }).then(() => {
+            console.log("Message saved successfully");
+        }).catch((error) => {
+            console.error("Error saving message: ", error);
+        });
+
+
+    };
+
+    const [anchorSearchBar, setAnchorSearchBar] = React.useState(null);
+    const openSearchBar = Boolean(anchorSearchBar);
+    const handleClickSearchBar = (event) => {
+        setAnchorSearchBar(event.currentTarget);
+    };
+    const handleCloseSearchBar = () => {
+        setAnchorSearchBar(null);
+    };
+
     return (
         <>
             <Room
@@ -140,6 +166,15 @@ const ChatRoom = ({
                 displayImages={displayImages}
 
                 MobileRoom={MobileRoom}
+                scrollToBottom={scrollToBottom}
+
+                handleSaveMessage={handleSaveMessage}
+
+                anchorSearchBar={anchorSearchBar}
+                openSearchBar={openSearchBar}
+                handleClickSearchBar={handleClickSearchBar}
+                handleCloseSearchBar={handleCloseSearchBar}
+
             />
         </>
     );

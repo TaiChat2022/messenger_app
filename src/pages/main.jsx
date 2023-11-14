@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { auth } from "../server/firebase";
-import ChatRoom from './chatRoom';
 
-import ChatMenu from './chatMenu';
-import Chat_inbox from './chat_inbox';
-import ListChat from "./listChat";
-import Save_mess from './ui/save_mess';
-import Shop from './ui/shop';
-import Xinchao from './xinchao';
+const ChatRoom = lazy(() => import('./chatRoom'));
+const ChatGroup = lazy(() => import('./chatGroup'));
+
+const ChatMenu = lazy(() => import('./chatMenu'));
+const ChatInbox = lazy(() => import('./chatInbox'));
+const ListChat = lazy(() => import("./listChat"));
+const Save_mess = lazy(() => import('./ui/save_mess'));
+const Shop = lazy(() => import('./ui/shop'));
+const Xinchao = lazy(() => import('./xinchao'));
 
 const Main = () => {
     // MENU 
@@ -72,17 +73,6 @@ const Main = () => {
     };
     // END SELECT List or room
 
-    // Get current user
-    const [user, setUser] = useState(null);
-    useEffect(() => {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                setUser(user);
-            } else {
-                setUser(null);
-            }
-        });
-    }, []);
     // Đổi màu giao diện 
     const [selectedTheme, setSelectedTheme] = useState('dark_theme'); // Mặc định chọn dark_theme
     const themes = {
@@ -174,6 +164,7 @@ const Main = () => {
                                         windowWidth={windowWidth}
                                     />
                                     {/* Chat room */}
+
                                     <Routes>
                                         <Route path="/" element={<Xinchao
                                             windowWidth={windowWidth}
@@ -181,18 +172,17 @@ const Main = () => {
                                         <Route path=":userId" element={<ChatRoom
                                             windowWidth={windowWidth}
                                         />} />
+
                                     </Routes>
                                 </>
                             )
                         }
-
                     </div>
                 </div>
                 <div className={`flex-auto w-full ${currentMenu === 'messenger__shop' ? '' : 'hidden'}`}>
                     <div className="grid grid-cols-12">
                         {/* Chat maketing */}
                         <Shop />
-                        {/* Chat room */}
                         {/* Chat room */}
                         <Routes>
                             <Route path="/" element={<Xinchao />} />
@@ -203,7 +193,7 @@ const Main = () => {
                 <div className={`flex-auto w-full ${currentMenu === 'messenger__inbox' ? '' : 'hidden'}`}>
                     <div className="grid grid-cols-12">
                         {/* Chat inBox */}
-                        <Chat_inbox />
+                        <ChatInbox />
                         {/* Chat room */}
                         <Routes>
                             <Route path="/" element={<Xinchao />} />

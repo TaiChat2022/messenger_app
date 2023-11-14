@@ -31,8 +31,6 @@ const GiaoDien = ({
         }));
         setcurrentThemeIcon(icon_theme);
     };
-
-
     return (
         <>
             <button type="button" className="custom_text_color__400 px-3 mb-1 bg-transparent hover_close_modal rounded-tr-lg text-sm w-8 h-8 ml-auto flex justify-end  items-center" onClick={handleCloseModal}>
@@ -52,8 +50,8 @@ const GiaoDien = ({
                     value={selectedTheme}
                     onChange={handleThemeChange}
                 >
-                    <option value="dark_theme">Tối</option>
-                    <option value="light_theme">Sáng</option>
+                    <option value={"dark_theme"}>Tối</option>
+                    <option value={"light_theme"}>Sáng</option>
                 </select>
             </div>
             <div className='m-4 text-left border-b border-gray-900 custom_text_color__100 '>
@@ -84,15 +82,15 @@ const GiaoDien = ({
                 </button>
 
             </div>
-            <div className='m-4 text-left border-b border-gray-900 custom_text_color__100 '>
+            <div className='m-4 text-left border-b border-gray-900 custom_text_color__100'>
                 <label htmlFor="theme_size" className="block mb-4 text-md custom_text_color__200 ">
                     Mực độ thu phóng
                 </label>
                 <select id="theme_size" className="w-full custom_bg_color__200 custom_text_color__100 border border-gray-900 text-sm rounded-lg  block w-full p-2.5 mb-4 ">
-                    <option value="theme_size_80">Nhỏ (80%)</option>
-                    <option value="theme_size_100" selected>Bình thường (100%)</option>
-                    <option value="theme_size_115">Lớn (115%)</option>
-                    <option value="theme_size_150">Cực lớn (150%)</option>
+                    <option value={"theme_size_80"}>Nhỏ (80%)</option>
+                    <option value={"theme_size_100"} selected>Bình thường (100%)</option>
+                    <option value={"theme_size_115"}>Lớn (115%)</option>
+                    <option value={"theme_size_150"}>Cực lớn (150%)</option>
                 </select>
                 <p className='text-sm custom_text2_color__900 mb-4'>
                     Thu phóng mọi thứ trong Messenger

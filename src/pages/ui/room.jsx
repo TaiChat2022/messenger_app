@@ -2,19 +2,25 @@ import React from 'react';
 import "../../assets/css/custom_color.css";
 import "../../assets/css/modal.css";
 
-const Room = ({
-    currentUser, messages,
-    newMessage, setNewMessage, sendMessage,
-    auth, chatHistoryRef,
-    handleImageUpload, imageInputRef,
-    formattedDate, windowWidth, Link,
-    handleSelected_List_Room, current_List_Room,
+const Room = (
+    {
+        currentUser, messages,
+        newMessage, setNewMessage, sendMessage,
+        auth, chatHistoryRef,
+        handleImageUpload, imageInputRef,
+        formattedDate, windowWidth, Link,
+        handleSelected_List_Room, current_List_Room,
+        scrollToBottom,
 
-    Modal, openModal, handleOpenModal, handleCloseModal,
-    showAllImages, setShowAllImages, imageMessages, displayImages,
+        Modal, openModal, handleOpenModal, handleCloseModal,
+        showAllImages, setShowAllImages, imageMessages, displayImages,
 
-    MobileRoom
-}) => {
+        MobileRoom,
+        handleSaveMessage,
+
+        Menu, anchorSearchBar, openSearchBar, handleClickSearchBar, handleCloseSearchBar
+    }
+) => {
     // console.log(messages); 
     return (
         <>
@@ -45,6 +51,11 @@ const Room = ({
                         setShowAllImages={setShowAllImages}
                         imageMessages={imageMessages}
                         displayImages={displayImages}
+
+                        anchorSearchBar={anchorSearchBar}
+                        openSearchBar={openSearchBar}
+                        handleClickSearchBar={handleClickSearchBar}
+                        handleCloseSearchBar={handleCloseSearchBar}
                     />
                 ) :
                 (
@@ -57,7 +68,11 @@ const Room = ({
                                     <img className="rounded-full w-10 h-10 object-cover" src={currentUser ? currentUser.photoURL : ''} />
                                     <div className="pl-2">
                                         <div className="font-semibold custom_text_color__100 text-xs md:text-lg">
-                                            <a className="hover:underline" href="#">{currentUser ? currentUser.displayName : ''}</a>
+                                            <a className="hover:underline" href="#">
+                                                {currentUser ?
+                                                    currentUser.displayName : ''
+                                                }
+                                            </a>
                                         </div>
                                         <div className="text-xs custom_text_color__300 flex items-center">
                                             {currentUser?.isOnline ?
@@ -80,15 +95,57 @@ const Room = ({
                                 {/* end user info */}
                                 {/* chat box action */}
                                 <div className="custom_text_color__100">
-                                    <button className="inline-flex hover:bg-gray-600 rounded-full p-2 cursor-pointer" type="button">
+                                    <button className="inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer" type="button">
                                         <i className="bi bi-telephone-fill text-lg"></i>
                                     </button>
-                                    <button className="inline-flex hover:bg-gray-600 rounded-full p-2 cursor-pointer" type="button">
+                                    <button className="inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer" type="button">
                                         <i className="bi bi-camera-video-fill text-lg"></i>
                                     </button>
-                                    <button className="inline-flex hover:bg-gray-600 rounded-full p-2 cursor-pointer" type="button">
+
+                                    <button
+                                        id="fade-button"
+                                        aria-controls={openSearchBar ? 'fade-menu' : undefined}
+                                        aria-haspopup="true"
+                                        aria-expanded={openSearchBar ? 'true' : undefined}
+                                        onClick={handleClickSearchBar}
+                                        className="inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer"
+                                        type="button"
+                                    >
                                         <i className="bi bi-search text-lg"></i>
                                     </button>
+                                    <Modal
+                                        MenuListProps={{
+                                            'aria-labelledby': 'fade-button',
+                                        }}
+                                        anchorEl={anchorSearchBar}
+                                        open={openSearchBar}
+                                        onClose={handleCloseSearchBar}
+                                    >
+                                        <div
+                                            className={`
+                                                flex items-center pl-2
+                                                custom_bg_color__300 custom_text_color__200 
+                                                w-64 h-12 absolute
+                                                top-12 right-8
+                                            `}
+                                        >
+                                            {/* Thanh tìm kiếm */}
+                                            <div className="rounded overflow-hidden md:max-w-xl mx-2">
+                                                <div className="flex items-center w-full">
+                                                    <i className="bi bi-search bg custom_text_color__200 text-xs md:text-sm" />
+                                                    <input type="text"
+                                                        placeholder="Tìm kiếm"
+                                                        className={`
+                                                                custom_bg_color__300 custom_text_color__100 
+                                                                text-xsmd:text-sm h-12 w-full
+                                                                px-4 rounded focus:outline-none hover:cursor-pointer
+                                                        `}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Modal>
+
                                     <button
                                         onClick={handleOpenModal}
                                         className={`inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer`}
@@ -171,7 +228,12 @@ const Room = ({
                                 <div className="custom_text_color__100">
                                     <button className="inline-flex hover:bg-gray-600 rounded-full p-2" type="button">
                                         <input type="file" onChange={handleImageUpload} style={{ display: 'none' }} ref={imageInputRef} />
-                                        <span className="icon-chat" onClick={() => imageInputRef.current.click()}>
+                                        <span className="icon-chat"
+                                            onClick={() => {
+                                                imageInputRef.current.click();
+                                                scrollToBottom();
+                                            }}
+                                        >
                                             <i className="bi bi-image text-2xl"></i>
                                         </span>
                                     </button>
@@ -185,6 +247,7 @@ const Room = ({
                                             if (e.key === "Enter" && !e.shiftKey) {
                                                 e.preventDefault();
                                                 sendMessage();
+                                                scrollToBottom();
                                             }
                                         }}
                                         type="text"
@@ -266,7 +329,7 @@ const Room = ({
                                         </div>
                                     </div>
                                     <div className='text-xs custom_text_color__300 flex items-center'>
-                                        <i class="bi bi-chevron-right"></i>
+                                        <i className="bi bi-chevron-right"></i>
                                     </div>
                                 </div>
                                 <div className='flex items-center justify-between cursor-pointer'>
@@ -279,20 +342,20 @@ const Room = ({
                                         </div>
                                     </div>
                                     <div className='text-xs custom_text_color__300 flex items-center'>
-                                        <i class="bi bi-chevron-right"></i>
+                                        <i className="bi bi-chevron-right"></i>
                                     </div>
                                 </div>
                                 <div className='flex items-center justify-between cursor-pointer'>
                                     <div className='text-xs custom_text_color__300 flex items-center my-2 gap-4'>
                                         <div className='w-6 h-6 text-lg rounded-full object-cover flex items-center justify-center'>
-                                            <i class="bi bi-vector-pen mb-1"></i>
+                                            <i className="bi bi-vector-pen mb-1"></i>
                                         </div>
                                         <div className='content'>
                                             <p>Chỉnh sửa biệt danh</p>
                                         </div>
                                     </div>
                                     <div className='text-xs custom_text_color__300 flex items-center'>
-                                        <i class="bi bi-chevron-right"></i>
+                                        <i className="bi bi-chevron-right"></i>
                                     </div>
                                 </div>
                             </div>
@@ -346,6 +409,25 @@ const Room = ({
                                         ))}
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        {/* Modal lưu tin nhắn*/}
+                        <div className='flex flex-col border-t border-gray-900 w-full'>
+                            <div className='px-6 py-2'>
+                                <div className='flex items-center justify-between cursor-pointer'>
+                                    <button
+                                        onClick={() => handleSaveMessage}
+                                        className='text-xs custom_text_color__300 flex items-center my-2 gap-4'
+                                    >
+                                        <div className='w-6 h-6 text-lg rounded-full object-cover flex items-center justify-center'>
+                                            <i className="bi bi-arrow-down-square-fill mb-1"></i>
+                                        </div>
+                                        <div className='content'>
+                                            <p>Lưu tin nhắn</p>
+                                        </div>
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                         {/* Modal chặn*/}
