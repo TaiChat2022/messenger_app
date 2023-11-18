@@ -9,7 +9,8 @@ const MobileRoom = ({
     handleSelected_List_Room, current_List_Room,
 
     Modal, handleOpenModal,
-    anchorSearchBar, openSearchBar, handleClickSearchBar, handleCloseSearchBar
+    anchorSearchBar, openSearchBar, handleClickSearchBar, handleCloseSearchBar,
+    anchorCall, openCall, handleClickCall, handleCloseCall
 }) => {
     return (
         <>
@@ -51,9 +52,60 @@ const MobileRoom = ({
                     {/* end user info */}
                     {/* chat box action */}
                     <div className="custom_text_color__100">
-                        <button className="inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer" type="button">
-                            <i className="bi bi-telephone-fill text-sm"></i>
+                        <button
+                            id="fade-button"
+                            aria-controls={openCall ? 'fade-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={openCall ? 'true' : undefined}
+                            onClick={handleClickCall}
+                            className="inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer"
+                            type="button"
+                        >
+                            <i className="bi bi-telephone-fill text-lg"></i>
                         </button>
+                        <Modal
+                            MenuListProps={{
+                                'aria-labelledby': 'fade-button',
+                            }}
+                            anchorEl={anchorCall}
+                            open={openCall}
+                            onClose={handleCloseCall}
+                        >
+                            <div
+                                className={`
+                                                flex items-center justify-center  pl-2
+                                                custom_bg_color__400 custom_text_color__200 
+                                                w-64 h-auto absolute
+                                                top-16 inset-x-1/4
+                                                rounded
+                                            `}
+                            >
+                                {/* Call */}
+                                <div className='flex items-center flex-col mt-6'>
+                                    <img className="rounded-full w-20 h-20 object-cover mb-4" src={currentUser ? currentUser.photoURL : ''} />
+                                    <div className="font-semibold custom_text_color__100 text-xs md:text-lg">
+                                        <a className="hover:underline" href="#">
+                                            {currentUser ?
+                                                currentUser.displayName : ''
+                                            }
+                                        </a>
+                                    </div>
+
+                                    <div className='flex mb-6 mt-2'>
+                                        <button className='border rounded-full px-2 py-1 m-4 bg-red-500 hover:bg-red-600 duration-200'
+                                            onClick={handleCloseCall}
+                                        >
+                                            <i class="bi bi-telephone-x text-xl"></i>
+                                        </button>
+                                        <button className='border rounded-full px-2 py-1 m-4 bg-green-500 hover:bg-green-600 duration-200'
+                                            onClick={handleCloseCall}
+                                        >
+                                            <i class="bi bi-telephone-fill text-xl"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </Modal>
                         <button className="inline-flex hover:bg-gray-600 rounded-full px-2 py-1 cursor-pointer" type="button">
                             <i className="bi bi-camera-video-fill text-sm"></i>
                         </button>

@@ -127,7 +127,7 @@ const ChatRoom = ({
 
 
     };
-
+    // Search bar
     const [anchorSearchBar, setAnchorSearchBar] = React.useState(null);
     const openSearchBar = Boolean(anchorSearchBar);
     const handleClickSearchBar = (event) => {
@@ -135,6 +135,16 @@ const ChatRoom = ({
     };
     const handleCloseSearchBar = () => {
         setAnchorSearchBar(null);
+    };
+
+    // calling
+    const [anchorCall, setAnchorCall] = React.useState(null);
+    const openCall = Boolean(anchorCall);
+    const handleClickCall = (event) => {
+        setAnchorCall(event.currentTarget);
+    };
+    const handleCloseCall = () => {
+        setAnchorCall(null);
     };
 
     return (
@@ -175,6 +185,10 @@ const ChatRoom = ({
                 handleClickSearchBar={handleClickSearchBar}
                 handleCloseSearchBar={handleCloseSearchBar}
 
+                anchorCall={anchorCall}
+                openCall={openCall}
+                handleClickCall={handleClickCall}
+                handleCloseCall={handleCloseCall}
             />
         </>
     );

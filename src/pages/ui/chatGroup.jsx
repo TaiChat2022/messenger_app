@@ -6,8 +6,6 @@ const ChatGroupUI = ({
     formattedDate,
     sendGroupMessage,
 
-    windowWidth, Link,
-    handleSelected_List_Room, current_List_Room,
 }) => {
     return (
         <>
